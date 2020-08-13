@@ -36,6 +36,7 @@ for genreItem in GenreItem:
 
 #Go through each genre and grab information from the books
 print('For' + ' ' + genreArr[0].name + ' ' + 'genre:')
+print()
 page = base + genreArr[0].link
 site = requests.get(page)
 
@@ -44,10 +45,15 @@ soup = BeautifulSoup(site.content, 'html.parser')
 Section = soup.find('section')
 Product = Section.find_all('article', class_= 'product_pod')
 for info in Product:
-	title = info.find('a')
+	title = info.find('h3')
+	priceDiv = info.find('div', class_= 'product_price')
+	price = priceDiv.find('p')
+	availability = info.find('p', class_= 'instock availability')
 
-print(title.text.strip())
-
+	print(title.text.strip())
+	print(price.text.strip())
+	print(availability.text.strip())
+	print()
 
 
 
